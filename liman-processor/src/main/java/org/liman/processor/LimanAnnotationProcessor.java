@@ -17,7 +17,6 @@ import java.util.Optional;
 import java.util.Set;
 
 @AutoService(Processor.class)
-@SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class LimanAnnotationProcessor extends AbstractProcessor {
 
     @Override
@@ -38,5 +37,10 @@ public class LimanAnnotationProcessor extends AbstractProcessor {
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         return Set.of(Once.class.getCanonicalName());
+    }
+
+    @Override
+    public SourceVersion getSupportedSourceVersion() {
+        return SourceVersion.latestSupported();
     }
 }

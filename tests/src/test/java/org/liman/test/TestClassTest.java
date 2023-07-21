@@ -5,10 +5,9 @@ import org.junit.Test;
 import javax.tools.*;
 import java.io.IOException;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class TestClassTest {
     @Test
@@ -18,28 +17,50 @@ public class TestClassTest {
                 "TestClass",
                 new String(Objects.requireNonNull(TestClassTest.class.getResourceAsStream("TestClass.java")).readAllBytes())));
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+        compiler.getSourceVersions();
         DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
         compiler.getTask(null, fileManager, diagnostics, null, null, compilationUnits).call();
         diagnostics.getDiagnostics()
                 .forEach(d -> System.out.println(d.toString()));
-        List<MyError> genetatedErrors = new ArrayList<>();
+        Set<MyError> genetatedErrors = new HashSet<>();
         for (Diagnostic<? extends JavaFileObject> diagnostic : diagnostics.getDiagnostics()) {
             genetatedErrors.add(new MyError(diagnostic.getSource().getName(), (int) diagnostic.getLineNumber()));
         }
-        List<MyError> actualErrors = new ArrayList<>();
+        Set<MyError> actualErrors = new HashSet<>();
         actualErrors.add(new MyError("Id", 5));
         actualErrors.add(new MyError("Id", 7));
-        assert genetatedErrors == actualErrors;
+        assertEquals( genetatedErrors,  actualErrors);
     }
 
-    public static class MyError{
+    public static class MyError {
         String annotation;
         int line;
 
         public MyError(String annotation, int line) {
             this.annotation = annotation;
             this.line = line;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            MyError myError = (MyError) o;
+            return line == myError.line && Objects.equals(annotation, myError.annotation);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(annotation, line);
+        }
+
+        @Override
+        public String toString() {
+            return "MyError{" +
+                    "annotation='" + annotation + '\'' +
+                    ", line=" + line +
+                    '}';
         }
     }
 

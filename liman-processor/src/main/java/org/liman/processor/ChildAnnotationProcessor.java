@@ -4,6 +4,7 @@ import org.liman.processor.meta.MetaProcessor;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;
+import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
 import java.lang.annotation.Annotation;
 import java.util.List;
@@ -35,5 +36,10 @@ public class ChildAnnotationProcessor extends AbstractProcessor {
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         return classes.stream().map(Class::getCanonicalName).collect(Collectors.toSet());
+    }
+
+    @Override
+    public SourceVersion getSupportedSourceVersion() {
+        return SourceVersion.latestSupported();
     }
 }
