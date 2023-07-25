@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 
-public class MainTestCompiler {
+public class LimanAnnotationsTestBase {
 
     private DiagnosticCollector<JavaFileObject> compileClassFromResource(String className, String resource) throws IOException {
         List<? extends JavaFileObject> compilationUnits

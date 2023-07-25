@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
-public class OnceTest extends MainTestCompiler{
+public class OnceTest extends LimanAnnotationsTestBase {
 
     @Test
     public void itShouldBeOneFieldAnnotatedByOnce() throws IOException {
