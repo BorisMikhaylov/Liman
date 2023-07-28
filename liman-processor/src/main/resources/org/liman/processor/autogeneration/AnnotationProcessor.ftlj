@@ -1,0 +1,27 @@
+<#-- Idea autoformatter works bad for this file -->
+<#-- add *.ftlj to Preference/Editor/Code style/Do not format -->
+<#-- @ftlvariable name="" type="org.liman.processor.autogeneration.ProcessorBean" -->
+
+package ${processorClass.packageName};
+
+import com.google.auto.service.AutoService;
+import org.liman.processor.ChildAnnotationProcessor;
+
+<#list annotations as annotation>
+import ${annotation.packageName}.${annotation.className};
+</#list>
+
+import javax.annotation.processing.Processor;
+
+@AutoService(Processor.class)
+public class ${processorClass.className} extends ChildAnnotationProcessor {
+    public ${processorClass.className}() {
+        super(
+        <#assign prefix = "">
+        <#list annotations as annotation>
+        ${prefix} ${annotation.className}.class
+        <#assign prefix = ",">
+        </#list>
+        );
+    }
+}

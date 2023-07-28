@@ -24,15 +24,18 @@ public class LimanAnnotationsTestBase {
     }
 
     private Collection<CompilerMessage> getExpectedMessages(String fileContent) {
-        String flag = "/*ERROR*/";
+
         Collection<CompilerMessage> errors = new TreeSet<>();
         String[] lines = fileContent.split("\n");
-        for (int i = 0; i < lines.length; ++i) {
-            String line = lines[i];
-            int index = line.indexOf(flag);
-            while (index >= 0) {
-                errors.add(new CompilerMessage(Diagnostic.Kind.ERROR, i + 1, index + flag.length() + 1));
-                index = line.indexOf(flag, index + 1);
+        for (Diagnostic.Kind kind : Diagnostic.Kind.values()) {
+            String flag = "/*" + kind.toString() + "*/";
+            for (int lineNumber = 0; lineNumber < lines.length; ++lineNumber) {
+                String line = lines[lineNumber];
+                int index = line.indexOf(flag);
+                while (index >= 0) {
+                    errors.add(new CompilerMessage(kind, lineNumber + 1, index + flag.length() + 1));
+                    index = line.indexOf(flag, index + 1);
+                }
             }
         }
         return errors;

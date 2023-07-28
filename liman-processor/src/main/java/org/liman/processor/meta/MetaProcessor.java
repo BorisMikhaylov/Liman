@@ -2,11 +2,9 @@ package org.liman.processor.meta;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
-import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
-import javax.tools.Diagnostic;
 import java.lang.annotation.Annotation;
-import java.util.*;
+import java.util.List;
 
 public abstract class MetaProcessor {
 
