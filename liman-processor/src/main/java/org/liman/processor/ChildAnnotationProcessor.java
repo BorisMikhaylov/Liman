@@ -18,6 +18,7 @@ public class ChildAnnotationProcessor extends AbstractProcessor {
     @SafeVarargs
     public ChildAnnotationProcessor(Class<? extends Annotation> ...classes) {
         this.classes = List.of(classes);
+        System.out.println(this.getClass().getCanonicalName());
     }
 
     @Override
@@ -25,7 +26,6 @@ public class ChildAnnotationProcessor extends AbstractProcessor {
                            RoundEnvironment roundEnv) {
         List<MetaProcessor> metaProcessors = MetaProcessor.createMetaProcessors(roundEnv, processingEnv);
         for (MetaProcessor metaProcessor : metaProcessors) {
-            ;
             classes.stream()
                     .filter(cl ->  cl.getAnnotation(metaProcessor.getMetaAnnotationClass())!=null)
                     .forEach(cl -> metaProcessor.process(processingEnv.getElementUtils().getTypeElement(cl.getCanonicalName())));

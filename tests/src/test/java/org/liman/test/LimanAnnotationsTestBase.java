@@ -20,6 +20,7 @@ public class LimanAnnotationsTestBase {
         DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
         compiler.getTask(null, fileManager, diagnostics, null, null, compilationUnits).call();
+        diagnostics.getDiagnostics().forEach(System.out::println);
         return diagnostics;
     }
 

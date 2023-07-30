@@ -4,9 +4,9 @@ import java.util.List;
 
 public class ProcessorBean {
     private final ClassBean processorClass;
-    private final List<ClassBean> annotations;
+    private final List<String> annotations;
 
-    public ProcessorBean(ClassBean processorClass, List<ClassBean> annotations) {
+    public ProcessorBean(ClassBean processorClass, List<String> annotations) {
         this.processorClass = processorClass;
         this.annotations = annotations;
     }
@@ -15,7 +15,7 @@ public class ProcessorBean {
         return processorClass;
     }
 
-    public List<ClassBean> getAnnotations() {
+    public List<String> getAnnotations() {
         return annotations;
     }
 

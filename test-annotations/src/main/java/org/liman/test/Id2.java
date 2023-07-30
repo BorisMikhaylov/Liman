@@ -10,5 +10,5 @@ import java.lang.annotation.Target;
 @Once
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
 @Retention(RetentionPolicy.CLASS)
-public @interface Id {
+public @interface Id2 {
 }
