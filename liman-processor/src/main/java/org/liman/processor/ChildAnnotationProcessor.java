@@ -1,5 +1,7 @@
 package org.liman.processor;
 
+import org.liman.MessageLevel;
+import org.liman.processor.context.Context;
 import org.liman.processor.meta.MetaProcessor;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -14,9 +16,11 @@ import java.util.stream.Collectors;
 public class ChildAnnotationProcessor extends AbstractProcessor {
 
     List<Class<? extends Annotation>> classes;
+    List<MetaProcessor> metaProcessors = MetaProcessor.createMetaProcessors();
+
 
     @SafeVarargs
-    public ChildAnnotationProcessor(Class<? extends Annotation> ...classes) {
+    public ChildAnnotationProcessor(Class<? extends Annotation>... classes) {
         this.classes = List.of(classes);
         System.out.println(this.getClass().getCanonicalName());
     }
@@ -24,11 +28,11 @@ public class ChildAnnotationProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations,
                            RoundEnvironment roundEnv) {
-        List<MetaProcessor> metaProcessors = MetaProcessor.createMetaProcessors(roundEnv, processingEnv);
+        Context context = new Context(processingEnv, roundEnv, MessageLevel.ERROR);
         for (MetaProcessor metaProcessor : metaProcessors) {
             classes.stream()
-                    .filter(cl ->  cl.getAnnotation(metaProcessor.getMetaAnnotationClass())!=null)
-                    .forEach(cl -> metaProcessor.process(processingEnv.getElementUtils().getTypeElement(cl.getCanonicalName())));
+                    .filter(cl -> cl.getAnnotation(metaProcessor.getMetaAnnotationClass()) != null)
+                    .forEach(cl -> metaProcessor.process(context, processingEnv.getElementUtils().getTypeElement(cl.getCanonicalName())));
         }
             return true;
     }

@@ -9,8 +9,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.PACKAGE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface LimanProcessor {
-    String processorClassName();
-
-    MessageLevel messageMaxLevel() default MessageLevel.ERROR;
+public @interface LimanMessageLevel {
+    MessageLevel value() default MessageLevel.ERROR;
 }

@@ -1,9 +1,11 @@
 package org.liman.processor;
 
 import com.google.auto.service.AutoService;
+import org.liman.MessageLevel;
 import org.liman.annotation.LimanProcessor;
 import org.liman.annotation.Once;
 import org.liman.processor.autogeneration.ProcessorAutoGeneration;
+import org.liman.processor.context.Context;
 import org.liman.processor.meta.MetaProcessor;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -13,23 +15,27 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
-import javax.tools.Diagnostic;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @AutoService(Processor.class)
 public class LimanAnnotationProcessor extends AbstractProcessor {
 
+    List<MetaProcessor> metaProcessors = MetaProcessor.createMetaProcessors();
+
     @Override
     public boolean process(Set<? extends TypeElement> annotations,
                            RoundEnvironment roundEnv) {
-        List<MetaProcessor> metaProcessors = MetaProcessor.createMetaProcessors(roundEnv, processingEnv);
+        Context context = new Context(processingEnv, roundEnv, MessageLevel.ERROR);
         for (MetaProcessor metaProcessor : metaProcessors) {
             for (Element element : roundEnv.getElementsAnnotatedWith(metaProcessor.getMetaAnnotationClass())) {
                 Optional.of(element)
                         .filter(TypeElement.class::isInstance)
                         .map(TypeElement.class::cast)
-                        .ifPresent(metaProcessor::process);
+                        .ifPresent(e -> metaProcessor.process(context, e));
             }
         }
         Set<TypeElement> annotatedClasses = new HashSet<>();
@@ -42,16 +48,8 @@ public class LimanAnnotationProcessor extends AbstractProcessor {
         }
         Set<? extends Element> limanProcessorAnnotations = roundEnv.getElementsAnnotatedWith(LimanProcessor.class);
         if (limanProcessorAnnotations.size() > 1) {
-            limanProcessorAnnotations.forEach(e ->
-                    processingEnv.getMessager().printMessage(
-                            Diagnostic.Kind.ERROR,
-                            "You can only annotate one package by @LimanProcessor",
-                            e,
-                            e.getAnnotationMirrors()
-                                    .stream()
-                                    .filter(ee -> Objects.equals(ee.getAnnotationType().toString(), LimanProcessor.class.getCanonicalName()))
-                                    .findFirst()
-                                    .orElse(null)));
+            limanProcessorAnnotations.forEach(e -> context.printMessage(MessageLevel.ERROR, "You can only annotate one package by @LimanProcessor",
+                    e, LimanProcessor.class.toString()));
         } else if (limanProcessorAnnotations.size() == 1) {
             PackageElement packageElement = (PackageElement) limanProcessorAnnotations.stream().findFirst().get();
             LimanProcessor limanProcessor = packageElement.getAnnotation(LimanProcessor.class);
