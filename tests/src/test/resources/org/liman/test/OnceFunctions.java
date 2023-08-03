@@ -1,5 +1,7 @@
 package org.liman.test;
 
+import org.liman.test.annotations.Id;
+
 public abstract class OnceFunctions {
     /*ERROR*/@Id
     public int f1(){

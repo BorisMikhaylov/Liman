@@ -17,10 +17,12 @@ public class ChildAnnotationProcessor extends AbstractProcessor {
 
     List<Class<? extends Annotation>> classes;
     List<MetaProcessor> metaProcessors = MetaProcessor.createMetaProcessors();
+    MessageLevel maxMessageLevel;
 
 
     @SafeVarargs
-    public ChildAnnotationProcessor(Class<? extends Annotation>... classes) {
+    public ChildAnnotationProcessor(MessageLevel maxMessageLevel, Class<? extends Annotation>... classes) {
+        this.maxMessageLevel = maxMessageLevel;
         this.classes = List.of(classes);
         System.out.println(this.getClass().getCanonicalName());
     }
@@ -28,7 +30,7 @@ public class ChildAnnotationProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations,
                            RoundEnvironment roundEnv) {
-        Context context = new Context(processingEnv, roundEnv, MessageLevel.ERROR);
+        Context context = new Context(processingEnv, roundEnv, maxMessageLevel);
         for (MetaProcessor metaProcessor : metaProcessors) {
             classes.stream()
                     .filter(cl -> cl.getAnnotation(metaProcessor.getMetaAnnotationClass()) != null)

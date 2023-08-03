@@ -54,7 +54,7 @@ public class LimanAnnotationProcessor extends AbstractProcessor {
             PackageElement packageElement = (PackageElement) limanProcessorAnnotations.stream().findFirst().get();
             LimanProcessor limanProcessor = packageElement.getAnnotation(LimanProcessor.class);
             try {
-                new ProcessorAutoGeneration(processingEnv, annotatedClasses, packageElement.getQualifiedName().toString(), limanProcessor.processorClassName());
+                new ProcessorAutoGeneration(processingEnv, annotatedClasses, packageElement.getQualifiedName().toString(), limanProcessor.processorClassName(), limanProcessor.messageMaxLevel());
             } catch (IOException e) {
                 e.printStackTrace();
             }

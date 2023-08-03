@@ -1,6 +1,10 @@
 package org.liman.processor.autogeneration;
 
-import freemarker.template.*;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateExceptionHandler;
+import org.liman.MessageLevel;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.TypeElement;
@@ -17,11 +21,9 @@ public class ProcessorAutoGeneration {
             ProcessingEnvironment processingEnv,
             Set<TypeElement> annotations,
             String packageName,
-            String className) throws IOException {
-        Configuration cfg = new Configuration();  // TODO resolve warning
+            String className, MessageLevel maxMessageLevel) throws IOException {
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_32);
         cfg.setClassForTemplateLoading(ProcessorAutoGeneration.class, "");
-
-        cfg.setIncompatibleImprovements(new Version(2, 3, 20));
         cfg.setDefaultEncoding("UTF-8");
         cfg.setLocale(Locale.US);
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
@@ -31,7 +33,7 @@ public class ProcessorAutoGeneration {
         ClassBean processorClassBean = new ClassBean(packageName, className);
 
         ProcessorBean bean = new ProcessorBean(processorClassBean,
-                annotations.stream().map(a -> a.getQualifiedName().toString()).collect(Collectors.toList()));
+                annotations.stream().map(a -> a.getQualifiedName().toString()).collect(Collectors.toList()), maxMessageLevel);
 
         JavaFileObject builderFile = processingEnv
                 .getFiler()

@@ -1,4 +1,4 @@
-package org.liman.test;
+package org.liman.test.annotations;
 
 import org.liman.annotation.Once;
 
