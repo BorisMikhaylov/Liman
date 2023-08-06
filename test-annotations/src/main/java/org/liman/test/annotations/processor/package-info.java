@@ -1,4 +1,4 @@
-@LimanProcessor(processorClassName = "LimanTestClass", messageMaxLevel = MessageLevel.WARNING)
+@LimanProcessor(processorClassName = "LimanTestClass")
 @LimanMessageLevel(MessageLevel.ERROR)
 package org.liman.test.annotations.processor;
 

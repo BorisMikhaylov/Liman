@@ -7,7 +7,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.PACKAGE)
+@Target({ElementType.PACKAGE, ElementType.TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.MODULE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface LimanMessageLevel {
     MessageLevel value() default MessageLevel.ERROR;

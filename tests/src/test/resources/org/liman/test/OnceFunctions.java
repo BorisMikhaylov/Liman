@@ -1,5 +1,7 @@
 package org.liman.test;
 
+import org.liman.MessageLevel;
+import org.liman.annotation.LimanMessageLevel;
 import org.liman.test.annotations.Id;
 
 public abstract class OnceFunctions {

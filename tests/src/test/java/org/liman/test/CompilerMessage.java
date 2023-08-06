@@ -39,7 +39,9 @@ public class CompilerMessage implements Comparable<CompilerMessage> {
     @Override
     public int compareTo(CompilerMessage o) {
         return (int) (line == o.line
-                ? column - o.column
+                ? column == o.column
+                ? kind.ordinal() - o.kind.ordinal()
+                : column - o.column
                 : line - o.line);
     }
 }

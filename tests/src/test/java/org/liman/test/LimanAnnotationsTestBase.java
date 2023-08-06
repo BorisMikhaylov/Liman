@@ -10,18 +10,19 @@ import static org.junit.Assert.assertEquals;
 
 public class LimanAnnotationsTestBase {
 
-    private DiagnosticCollector<JavaFileObject> compileClassFromResource(String className, String resource) throws IOException {
+    private Collection<CompilerMessage> compileClassFromResource(String className, String resource, List<String> compilerOptions) throws IOException {
         List<? extends JavaFileObject> compilationUnits
                 = Collections.singletonList(new JavaSourceFromString(
                 className,
                 new String(Objects.requireNonNull(OnceTest.class.getResourceAsStream(resource)).readAllBytes())));
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-        compiler.getSourceVersions();
         DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
-        compiler.getTask(null, fileManager, diagnostics, null, null, compilationUnits).call();
+        compiler.getTask(null, fileManager, diagnostics, compilerOptions, null, compilationUnits).call();
         diagnostics.getDiagnostics().forEach(System.out::println);
-        return diagnostics;
+        return diagnostics.getDiagnostics().stream()
+                .map(d -> new CompilerMessage(d.getKind(), d.getLineNumber(), d.getColumnNumber()))
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 
     private Collection<CompilerMessage> getExpectedMessages(String fileContent) {
@@ -43,11 +44,12 @@ public class LimanAnnotationsTestBase {
     }
 
     public void testClassFromResource(String className, String resource) throws IOException {
-        DiagnosticCollector<JavaFileObject> diagnosticCollector = compileClassFromResource(className, resource);
+
+        Collection<CompilerMessage> actualErrors = compileClassFromResource(className, resource, List.of("-proc:none"));
+        assertEquals(new TreeSet<>(), actualErrors);
+
+        actualErrors = compileClassFromResource(className, resource, null);
         Collection<CompilerMessage> expectedErrors = getExpectedMessages(new String(Objects.requireNonNull(OnceTest.class.getResourceAsStream(resource)).readAllBytes()));
-        Collection<CompilerMessage> actualErrors = diagnosticCollector.getDiagnostics().stream()
-                .map(d -> new CompilerMessage(d.getKind(), d.getLineNumber(), d.getColumnNumber()))
-                .collect(Collectors.toCollection(TreeSet::new));
         assertEquals(expectedErrors, actualErrors);
     }
 
