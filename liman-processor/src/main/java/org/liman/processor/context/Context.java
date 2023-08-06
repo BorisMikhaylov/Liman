@@ -1,7 +1,7 @@
 package org.liman.processor.context;
 
 import org.liman.MessageLevel;
-import org.liman.annotation.LimanMessageLevel;
+import org.liman.annotation.LimanMessageMaxLevel;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
@@ -13,12 +13,12 @@ import java.util.Optional;
 public class Context {
     private final ProcessingEnvironment processingEnv;
     private final RoundEnvironment roundEnv;
-    private MessageLevel messageLevel;
+    private final MessageLevel messageMaxLevel;
 
-    public Context(ProcessingEnvironment processingEnv, RoundEnvironment roundEnv, MessageLevel messageLevel) {
+    public Context(ProcessingEnvironment processingEnv, RoundEnvironment roundEnv, MessageLevel messageMaxLevel) {
         this.processingEnv = processingEnv;
         this.roundEnv = roundEnv;
-        this.messageLevel = messageLevel;
+        this.messageMaxLevel = messageMaxLevel;
     }
 
     public ProcessingEnvironment getProcessingEnv() {
@@ -29,14 +29,6 @@ public class Context {
         return roundEnv;
     }
 
-    public MessageLevel getMessageLevel() {
-        return messageLevel;
-    }
-
-    public void setMessageLevel(MessageLevel messageLevel) {
-        this.messageLevel = messageLevel;
-    }
-
     private static Diagnostic.Kind getKind(MessageLevel level) {
         return switch (level) {
             case ERROR -> Diagnostic.Kind.ERROR;
@@ -45,19 +37,19 @@ public class Context {
         };
     }
 
-    private Optional<MessageLevel> getOverloadingLevel(Element element) {
+    private Optional<MessageLevel> getOverloadingMaxLevel(Element element) {
         if (element == null) {
             return Optional.empty();
         }
-        LimanMessageLevel limanMessageLevel = element.getAnnotation(LimanMessageLevel.class);
-        if (limanMessageLevel != null) {
-            return Optional.of(limanMessageLevel.value());
+        LimanMessageMaxLevel limanMessageMaxLevel = element.getAnnotation(LimanMessageMaxLevel.class);
+        if (limanMessageMaxLevel != null) {
+            return Optional.of(limanMessageMaxLevel.value());
         }
-        return getOverloadingLevel(element.getEnclosingElement());
+        return getOverloadingMaxLevel(element.getEnclosingElement());
     }
 
     public void printMessage(MessageLevel level, String message, Element element, String annotationType) {
-        MessageLevel maxLevel = getOverloadingLevel(element).orElse(this.messageLevel);
+        MessageLevel maxLevel = getOverloadingMaxLevel(element).orElse(this.messageMaxLevel);
         if (maxLevel.ordinal() < level.ordinal()) {
             level = maxLevel;
         }

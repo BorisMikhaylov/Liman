@@ -38,11 +38,10 @@ class OnceTest : LimanAnnotationsTestBase() {
     @Test
     @Throws(IOException::class)
     fun itShouldBeOneFunctionAnnotatedByOnce() {
-        val sourseCode = """
+        val sourceCode = """
             package org.liman.test;
 
             import org.liman.MessageLevel;
-            import org.liman.annotation.LimanMessageLevel;
             import org.liman.test.annotations.Id;
 
             public abstract class OnceFunctions {
@@ -54,9 +53,9 @@ class OnceTest : LimanAnnotationsTestBase() {
                 /*ERROR*/@Id
                 public int f2(){
                     return 2;
-                };
+                }
             }
         """
-        testClassFromString("OnceFunctions", sourseCode)
+        testClassFromString("OnceFunctions", sourceCode)
     }
 }
