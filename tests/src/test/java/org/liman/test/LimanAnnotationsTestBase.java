@@ -1,20 +1,20 @@
 package org.liman.test;
 
 import javax.tools.*;
-import java.io.IOException;
 import java.net.URI;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 
 public class LimanAnnotationsTestBase {
 
-    private Collection<CompilerMessage> compileClassFromResource(String className, String resource, List<String> compilerOptions) throws IOException {
+    private Collection<CompilerMessage> compileClassFromString(String name, String sourceCode, List<String> compilerOptions) {
         List<? extends JavaFileObject> compilationUnits
-                = Collections.singletonList(new JavaSourceFromString(
-                className,
-                new String(Objects.requireNonNull(OnceTest.class.getResourceAsStream(resource)).readAllBytes())));
+                = Collections.singletonList(new JavaSourceFromString(name, sourceCode));
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
@@ -43,28 +43,28 @@ public class LimanAnnotationsTestBase {
         return errors;
     }
 
-    public void testClassFromResource(String className, String resource) throws IOException {
+    public void testClassFromString(String className, String sourceCode) {
 
-        Collection<CompilerMessage> actualErrors = compileClassFromResource(className, resource, List.of("-proc:none"));
+        Collection<CompilerMessage> actualErrors = compileClassFromString(className, sourceCode, List.of("-proc:none"));
         assertEquals(new TreeSet<>(), actualErrors);
 
-        actualErrors = compileClassFromResource(className, resource, null);
-        Collection<CompilerMessage> expectedErrors = getExpectedMessages(new String(Objects.requireNonNull(OnceTest.class.getResourceAsStream(resource)).readAllBytes()));
+        actualErrors = compileClassFromString(className, sourceCode, null);
+        Collection<CompilerMessage> expectedErrors = getExpectedMessages(sourceCode);
         assertEquals(expectedErrors, actualErrors);
     }
 
     public static class JavaSourceFromString extends SimpleJavaFileObject {
-        final String code;
+        final String sourceCode;
 
-        JavaSourceFromString(String name, String code) {
+        JavaSourceFromString(String name, String sourceCode) {
             super(URI.create("string:///" + name.replace('.', '/') + Kind.SOURCE.extension),
                     Kind.SOURCE);
-            this.code = code;
+            this.sourceCode = sourceCode;
         }
 
         @Override
         public CharSequence getCharContent(boolean ignoreEncodingErrors) {
-            return code;
+            return sourceCode;
         }
     }
 }
