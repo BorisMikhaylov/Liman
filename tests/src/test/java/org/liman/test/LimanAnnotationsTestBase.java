@@ -19,7 +19,7 @@ public class LimanAnnotationsTestBase {
         DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
         compiler.getTask(null, fileManager, diagnostics, compilerOptions, null, compilationUnits).call();
-        diagnostics.getDiagnostics().forEach(System.out::println);
+        //diagnostics.getDiagnostics().forEach(System.out::println);
         return diagnostics.getDiagnostics().stream()
                 .map(d -> new CompilerMessage(d.getKind(), d.getLineNumber(), d.getColumnNumber()))
                 .collect(Collectors.toCollection(TreeSet::new));
