@@ -2,12 +2,14 @@ package org.liman.test
 
 import org.junit.Test
 
-class LimanProcessorTest : LimanAnnotationsTestBase() {
+class MessageLevelTest : LimanAnnotationsTestBase() {
     @Test
     internal fun OnceFieldsTest() {
         val sourceCode = """
 package org.liman.test;
 
+import org.liman.MessageLevel;
+import org.liman.annotation.LimanMessageMaxLevel;
 import org.liman.annotation.Once;
 
 import java.lang.annotation.ElementType;
@@ -21,11 +23,12 @@ import java.lang.annotation.Target;
 @interface Id {
 }
 
+@LimanMessageMaxLevel(MessageLevel.WARNING)
 public abstract class OnceFields {
-    /*ERROR*/@Id
+    /*WARNING*/@Id
     public int f1;
 
-    /*ERROR*/@Id
+    /*WARNING*/@Id
     public int f2;
 
 }
@@ -38,6 +41,8 @@ public abstract class OnceFields {
         val sourceCode = """
 package org.liman.test;
 
+import org.liman.MessageLevel;
+import org.liman.annotation.LimanMessageMaxLevel;
 import org.liman.annotation.Once;
 
 import java.lang.annotation.ElementType;
@@ -51,10 +56,20 @@ import java.lang.annotation.Target;
 @interface Id {
 }
 
+@LimanMessageMaxLevel(MessageLevel.ERROR)
 public abstract class OnceFunctions {
     /*ERROR*/@Id
     public int f1(){
         return 1;
+    }
+    
+    @LimanMessageMaxLevel(MessageLevel.WARNING)
+    static class Local {
+        /*WARNING*/@Id
+        public int t1;
+        
+        /*WARNING*/@Id
+        public int t2;
     }
 
     /*ERROR*/@Id
@@ -72,6 +87,8 @@ public abstract class OnceFunctions {
 package org.liman.test;
 
 import org.liman.annotation.Once;
+import org.liman.MessageLevel;
+import org.liman.annotation.LimanMessageMaxLevel;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -84,11 +101,23 @@ import java.lang.annotation.Target;
 @interface Id {
 }
 
+@LimanMessageMaxLevel(MessageLevel.WARNING)
 public abstract class OnceMember {
-    /*ERROR*/@Id
-    public int m1;
+    /*WARNING*/@Id
+    public int f1(){
+        return 1;
+    }
+    
+    @LimanMessageMaxLevel(MessageLevel.ERROR)
+    static class Local {
+        /*ERROR*/@Id
+        public int t1;
+        
+        /*ERROR*/@Id
+        public int t2;
+    }
 
-    /*ERROR*/@Id
+    /*WARNING*/@Id
     public int f2(){
         return 2;
     }
@@ -102,6 +131,8 @@ public abstract class OnceMember {
         val sourceCode = """
 package org.liman.test;
 
+import org.liman.MessageLevel;
+import org.liman.annotation.LimanMessageMaxLevel;
 import org.liman.annotation.Once;
 
 import java.lang.annotation.ElementType;
@@ -115,9 +146,17 @@ import java.lang.annotation.Target;
 @interface Id {
 }
 
+@LimanMessageMaxLevel(MessageLevel.WARNING)
 public abstract class OnceParameter {
-    public int m1(/*ERROR*/@Id int p1, int p2, /*ERROR*/@Id int p3){
-        return p1 + p2 + p3;
+    @Id
+    int a;
+    
+    static class First{
+        /*WARNING*/@Id
+        int b;
+        
+        /*WARNING*/@Id
+        int c;
     }
 }
         """

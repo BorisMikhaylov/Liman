@@ -1,5 +1,7 @@
 package org.liman.test;
 
+import org.liman.MessageLevel;
+
 import javax.tools.*;
 import java.net.URI;
 import java.util.Collection;
@@ -21,7 +23,7 @@ public class LimanAnnotationsTestBase {
         compiler.getTask(null, fileManager, diagnostics, compilerOptions, null, compilationUnits).call();
         diagnostics.getDiagnostics().forEach(System.out::println);
         return diagnostics.getDiagnostics().stream()
-                .map(d -> new CompilerMessage(d.getKind(), d.getLineNumber(), d.getColumnNumber()))
+                .map(d -> new CompilerMessage(MessageLevel.fromKind(d.getKind()), d.getLineNumber(), d.getColumnNumber()))
                 .collect(Collectors.toCollection(TreeSet::new));
     }
 
@@ -29,13 +31,13 @@ public class LimanAnnotationsTestBase {
 
         Collection<CompilerMessage> errors = new TreeSet<>();
         String[] lines = fileContent.split("\n");
-        for (Diagnostic.Kind kind : Diagnostic.Kind.values()) {
-            String flag = "/*" + kind.toString() + "*/";
+        for (MessageLevel messageLevel : MessageLevel.values()) {
+            String flag = "/*" + messageLevel.toString() + "*/";
             for (int lineNumber = 0; lineNumber < lines.length; ++lineNumber) {
                 String line = lines[lineNumber];
                 int index = line.indexOf(flag);
                 while (index >= 0) {
-                    errors.add(new CompilerMessage(kind, lineNumber + 1, index + flag.length() + 1));
+                    errors.add(new CompilerMessage(messageLevel, lineNumber + 1, index + flag.length() + 1));
                     index = line.indexOf(flag, index + 1);
                 }
             }

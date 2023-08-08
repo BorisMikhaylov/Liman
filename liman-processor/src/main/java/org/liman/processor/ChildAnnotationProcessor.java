@@ -24,7 +24,6 @@ public class ChildAnnotationProcessor extends AbstractProcessor {
     public ChildAnnotationProcessor(MessageLevel maxMessageLevel, Class<? extends Annotation>... classes) {
         this.maxMessageLevel = maxMessageLevel;
         this.classes = List.of(classes);
-        System.out.println(this.getClass().getCanonicalName());
     }
 
     @Override

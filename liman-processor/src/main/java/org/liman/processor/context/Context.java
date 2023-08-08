@@ -6,7 +6,6 @@ import org.liman.annotation.LimanMessageMaxLevel;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
-import javax.tools.Diagnostic;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -29,14 +28,6 @@ public class Context {
         return roundEnv;
     }
 
-    private static Diagnostic.Kind getKind(MessageLevel level) {
-        return switch (level) {
-            case ERROR -> Diagnostic.Kind.ERROR;
-            case WARNING -> Diagnostic.Kind.MANDATORY_WARNING;
-            case INFO -> Diagnostic.Kind.NOTE;
-        };
-    }
-
     private Optional<MessageLevel> getOverloadingMaxLevel(Element element) {
         if (element == null) {
             return Optional.empty();
@@ -54,7 +45,7 @@ public class Context {
             level = maxLevel;
         }
         getProcessingEnv().getMessager().printMessage(
-                getKind(level),
+                level.getKind(),
                 message,
                 element,
                 element.getAnnotationMirrors()

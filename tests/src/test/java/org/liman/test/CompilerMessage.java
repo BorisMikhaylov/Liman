@@ -1,15 +1,16 @@
 package org.liman.test;
 
-import javax.tools.Diagnostic;
+import org.liman.MessageLevel;
+
 import java.util.Objects;
 
 public class CompilerMessage implements Comparable<CompilerMessage> {
-    Diagnostic.Kind kind;
+    MessageLevel messageLevel;
     long line;
     long column;
 
-    public CompilerMessage(Diagnostic.Kind kind, long line, long column) {
-        this.kind = kind;
+    public CompilerMessage(MessageLevel messageLevel, long line, long column) {
+        this.messageLevel = messageLevel;
         this.line = line;
         this.column = column;
     }
@@ -19,18 +20,18 @@ public class CompilerMessage implements Comparable<CompilerMessage> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CompilerMessage that = (CompilerMessage) o;
-        return line == that.line && column == that.column && kind == that.kind;
+        return line == that.line && column == that.column && messageLevel == that.messageLevel;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(kind, line, column);
+        return Objects.hash(messageLevel, line, column);
     }
 
     @Override
     public String toString() {
         return "CompilerMessage{" +
-                "kind=" + kind +
+                "messageLevel=" + messageLevel +
                 ", line=" + line +
                 ", column=" + column +
                 '}';
@@ -40,7 +41,7 @@ public class CompilerMessage implements Comparable<CompilerMessage> {
     public int compareTo(CompilerMessage o) {
         return (int) (line == o.line
                 ? column == o.column
-                ? kind.ordinal() - o.kind.ordinal()
+                ? messageLevel.ordinal() - o.messageLevel.ordinal()
                 : column - o.column
                 : line - o.line);
     }
