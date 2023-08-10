@@ -13,7 +13,7 @@ public abstract class MetaProcessor {
     public abstract void process(Context context, TypeElement annotationTypeElement);
 
     public static List<MetaProcessor> createMetaProcessors() {
-        return List.of(new MetaProcessorOnce());
+        return List.of(new MetaProcessorOnce(), new MetaProcessorFinal(), new MetaProcessorStatic());
     }
 
 }
