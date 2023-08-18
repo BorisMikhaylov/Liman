@@ -1,0 +1,47 @@
+<idea-plugin>
+    <id>com.your.company.unique.plugin.id</id>
+    <name>Liman</name>
+    <version>1.0</version>
+    <vendor email="boris.n.mikhaylov@gmail.com" url="https://github.com/BorisMikhaylov/Liman">Liman</vendor>
+
+    <description>
+        Limit annotation usages support library org.liman
+    </description>
+
+    <change-notes>
+        version 1.0
+    </change-notes>
+
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/build-number-ranges.html for description -->
+    <idea-version since-build="210.0"/>
+
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+
+        <localInspection language="JAVA"
+                         bundle="messages.InspectionsBundle"
+                         key="group.names.probable.bugs"
+                         groupPath="Java"
+                         groupBundle="messages.InspectionsBundle"
+                         groupKey="group.names.probable.bugs"
+                         enabledByDefault="true"
+                         level="ERROR"
+                         implementationClass="org.liman.plugin.modifier.staticc.MarkStatic"/>
+        <localInspection
+                language="JAVA"
+                bundle="messages.InspectionsBundle"
+                key="group.names.probable.bugs"
+                groupPath="Java"
+                groupBundle="messages.InspectionsBundle"
+                groupKey="group.names.probable.bugs"
+                enabledByDefault="true"
+                level="ERROR"
+                implementationClass="org.liman.plugin.modifier.finall.MarkFinal"/>
+    </extensions>
+
+
+</idea-plugin>

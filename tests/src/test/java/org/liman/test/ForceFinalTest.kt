@@ -2,7 +2,7 @@ package org.liman.test
 
 import org.junit.Test
 
-class ShouldBeFinalTest : LimanAnnotationsTestBase() {
+class ForceFinalTest : LimanAnnotationsTestBase() {
     @Test
     fun finalFieldsFunctions() {
         val sourceCode = """
