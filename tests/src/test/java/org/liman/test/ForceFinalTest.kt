@@ -8,7 +8,7 @@ class ForceFinalTest : LimanAnnotationsTestBase() {
         val sourceCode = """
         package org.liman.test;
         
-        import org.liman.annotation.ShouldBeFinal;import org.liman.test.annotations.ShouldFinal;
+        import org.liman.test.annotations.ShouldFinal;
         
         public abstract class OnceFields {
             /*ERROR*/@ShouldFinal
