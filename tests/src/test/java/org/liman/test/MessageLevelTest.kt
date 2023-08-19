@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 }
 
 @LimanMessageMaxLevel(MessageLevel.WARNING)
-public abstract class OnceFields {
+public abstract class TestClass {
     /*WARNING*/@Id
     public int f1;
 
@@ -33,7 +33,7 @@ public abstract class OnceFields {
 
 }
         """
-        testClassFromString("OnceFields", sourceCode)
+        testClassFromString(sourceCode)
     }
 
     @Test
@@ -57,7 +57,7 @@ import java.lang.annotation.Target;
 }
 
 @LimanMessageMaxLevel(MessageLevel.ERROR)
-public abstract class OnceFunctions {
+public abstract class TestClass {
     /*ERROR*/@Id
     public int f1(){
         return 1;
@@ -78,7 +78,7 @@ public abstract class OnceFunctions {
     }
 }
         """
-        testClassFromString("OnceFunctions", sourceCode)
+        testClassFromString(sourceCode)
     }
 
     @Test
@@ -102,7 +102,7 @@ import java.lang.annotation.Target;
 }
 
 @LimanMessageMaxLevel(MessageLevel.WARNING)
-public abstract class OnceMember {
+public abstract class TestClass {
     /*WARNING*/@Id
     public int f1(){
         return 1;
@@ -123,7 +123,7 @@ public abstract class OnceMember {
     }
 }
         """
-        testClassFromString("OnceMember", sourceCode)
+        testClassFromString(sourceCode)
     }
 
     @Test
@@ -147,7 +147,7 @@ import java.lang.annotation.Target;
 }
 
 @LimanMessageMaxLevel(MessageLevel.WARNING)
-public abstract class OnceParameter {
+public abstract class TestClass {
     @Id
     int a;
     
@@ -160,7 +160,7 @@ public abstract class OnceParameter {
     }
 }
         """
-        testClassFromString("OnceParameter", sourceCode)
+        testClassFromString(sourceCode)
     }
 
     @Test
@@ -181,7 +181,7 @@ import java.lang.annotation.Target;
 @interface Id {
 }
 
-public abstract class OnceParameter {
+public abstract class TestClass {
     @Id
     public int m1(@Id int p1, int p2, int p3){
         return p1 + p2 + p3;
@@ -190,6 +190,6 @@ public abstract class OnceParameter {
     String name = "Vasiliy";
 }
         """
-        testClassFromString("OnceParameter", sourceCode)
+        testClassFromString(sourceCode)
     }
 }

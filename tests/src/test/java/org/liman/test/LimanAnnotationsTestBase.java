@@ -45,8 +45,8 @@ public class LimanAnnotationsTestBase {
         return errors;
     }
 
-    public void testClassFromString(String className, String sourceCode) {
-
+    public void testClassFromString(String sourceCode) {
+        String className = "TestClass";
         Collection<CompilerMessage> actualErrors = compileClassFromString(className, sourceCode, List.of("-proc:none"));
         assertEquals(new TreeSet<>(), actualErrors);
 

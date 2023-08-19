@@ -10,7 +10,7 @@ class OnceTest : LimanAnnotationsTestBase() {
 
             import org.liman.test.annotations.Id;
 
-            public abstract class OnceFields {
+            public abstract class TestClass {
                 /*ERROR*/@Id
                 public int f1;
 
@@ -20,7 +20,7 @@ class OnceTest : LimanAnnotationsTestBase() {
             }
         """
 
-        testClassFromString("OnceFields", sourceCode)
+        testClassFromString(sourceCode)
     }
 
     @Test
@@ -30,7 +30,7 @@ class OnceTest : LimanAnnotationsTestBase() {
 
             import org.liman.test.annotations.Id;
 
-            public abstract class OnceFunctions {
+            public abstract class TestClass {
                 /*ERROR*/@Id
                 public int f1(){
                     return 1;
@@ -42,7 +42,7 @@ class OnceTest : LimanAnnotationsTestBase() {
                 }
             }
         """
-        testClassFromString("OnceFunctions", sourceCode)
+        testClassFromString(sourceCode)
     }
 
     @Test
@@ -52,7 +52,7 @@ class OnceTest : LimanAnnotationsTestBase() {
 
             import org.liman.test.annotations.Id;
 
-            public abstract class OnceMember {
+            public abstract class TestClass {
                 /*ERROR*/@Id
                 public int m1;
 
@@ -62,7 +62,7 @@ class OnceTest : LimanAnnotationsTestBase() {
                 }
             }
         """
-        testClassFromString("OnceMember", sourceCode)
+        testClassFromString(sourceCode)
     }
 
     @Test
@@ -72,13 +72,13 @@ class OnceTest : LimanAnnotationsTestBase() {
 
             import org.liman.test.annotations.Id;
 
-            public abstract class OnceParameter {
+            public abstract class TestClass {
                 public int m1(/*ERROR*/@Id int p1, int p2, /*ERROR*/@Id int p3){
                     return p1 + p2 + p3;
                 }
             }
         """
-        testClassFromString("OnceParameter", sourceCode)
+        testClassFromString(sourceCode)
     }
 
     @Test
@@ -88,7 +88,7 @@ class OnceTest : LimanAnnotationsTestBase() {
 
             import org.liman.test.annotations.Id;
 
-            public abstract class OnceParameter {
+            public abstract class TestClass {
                 @Id
                 public int m1(@Id int p1, int p2, int p3){
                     return p1 + p2 + p3;
@@ -97,6 +97,6 @@ class OnceTest : LimanAnnotationsTestBase() {
                 String name = "Vasiliy";
             }
         """
-        testClassFromString("OnceParameter", sourceCode)
+        testClassFromString(sourceCode)
     }
 }

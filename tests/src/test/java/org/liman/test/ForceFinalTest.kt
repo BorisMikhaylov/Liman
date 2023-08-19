@@ -10,7 +10,7 @@ class ForceFinalTest : LimanAnnotationsTestBase() {
         
         import org.liman.test.annotations.ShouldFinal;
         
-        public abstract class OnceFields {
+        public abstract class TestClass {
             /*ERROR*/@ShouldFinal
             public int f1;
         
@@ -31,7 +31,7 @@ class ForceFinalTest : LimanAnnotationsTestBase() {
         }
         """
 
-        testClassFromString("OnceFields", sourceCode)
+        testClassFromString(sourceCode)
     }
 
     @Test
@@ -41,7 +41,7 @@ class ForceFinalTest : LimanAnnotationsTestBase() {
 
         import org.liman.test.annotations.ShouldNotFinal;
 
-        public abstract class OnceFields {
+        public abstract class TestClass {
             @ShouldNotFinal
             public int f1;
         
@@ -50,7 +50,7 @@ class ForceFinalTest : LimanAnnotationsTestBase() {
         }
         """
 
-        testClassFromString("OnceFields", sourceCode)
+        testClassFromString(sourceCode)
     }
 
     @Test
@@ -60,7 +60,7 @@ class ForceFinalTest : LimanAnnotationsTestBase() {
         
         import org.liman.test.annotations.ShouldFinal;
         
-        public abstract class OnceFields {
+        public abstract class TestClass {
             /*ERROR*/@ShouldFinal
             static class cl1{
         
@@ -72,6 +72,6 @@ class ForceFinalTest : LimanAnnotationsTestBase() {
             }
         }
         """
-        testClassFromString("OnceFields", sourceCode)
+        testClassFromString(sourceCode)
     }
 }
