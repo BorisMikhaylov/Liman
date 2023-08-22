@@ -16,19 +16,10 @@ public class MarkFinal extends AbstractBaseJavaLocalInspectionTool {
             @Override
             public void visitAnnotation(@NotNull PsiAnnotation annotation) {
                 super.visitAnnotation(annotation);
-                Boolean value = Optional.of(annotation)
+                boolean value = Optional.of(annotation)
                         .map(PsiAnnotation::resolveAnnotationType)
                         .map(a -> a.getAnnotation(ForceFinal.class.getName()))
-                        .map(a -> a.findAttributeValue("value"))
-                        .filter(PsiLiteralExpression.class::isInstance)
-                        .map(PsiLiteralExpression.class::cast)
-                        .map(PsiLiteralExpression::getValue)
-                        .filter(Boolean.class::isInstance)
-                        .map(Boolean.class::cast)
-                        .orElse(null);
-                if (value == null) {
-                    return;
-                }
+                        .isPresent();
                 PsiModifierList psiModifierList = Optional.of(annotation)
                         .map(PsiAnnotation::getParent)
                         .filter(PsiModifierList.class::isInstance)

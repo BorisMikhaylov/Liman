@@ -22,19 +22,19 @@ public class MarkFinalQuickFix implements LocalQuickFix {
     @Override
     public @IntentionName
     @NotNull String getName() {
-        return "Make it static";
+        return "Make it final";
     }
 
     @Override
     public @IntentionFamilyName
     @NotNull String getFamilyName() {
-        return "Make it static";
+        return "Make it final";
     }
 
     @Override
     public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor problemDescriptor) {
         PsiModifierList modifierListElement = modifierList.getElement();
         if (modifierListElement == null) return;
-        modifierListElement.setModifierProperty(PsiModifier.STATIC, true);
+        modifierListElement.setModifierProperty(PsiModifier.FINAL, true);
     }
 }
