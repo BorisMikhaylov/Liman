@@ -5,26 +5,26 @@ import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiModifierList;
 import org.jetbrains.annotations.NotNull;
-import org.liman.annotation.ForceStatic;
+import org.liman.annotation.ForceNonStatic;
 import org.liman.plugin.modifier.Marker;
 
-public class MarkStatic extends Marker<ForceStatic> {
+public class MarkNonStatic extends Marker<ForceNonStatic> {
 
-    public MarkStatic() {
-        super(ForceStatic.class);
+    public MarkNonStatic() {
+        super(ForceNonStatic.class);
     }
 
     @Override
     public boolean checkModifier(PsiModifierList psiModifierList) {
-        return psiModifierList.hasModifierProperty(PsiModifier.STATIC);
+        return psiModifierList.hasModifierProperty(PsiModifier.FINAL);
     }
 
     @Override
     public void registerProblem(@NotNull ProblemsHolder holder, @NotNull PsiAnnotation annotation, PsiModifierList psiModifierList) {
         holder.registerProblem(
                 annotation,
-                "Annotation target should be static",
-                new MarkStaticQuickFix(psiModifierList));
+                "Annotation target should not be static",
+                new MarkNonStaticQuickFix(psiModifierList));
     }
 }
 

@@ -1,42 +1,30 @@
 package org.liman.plugin.modifier.finall;
 
-import com.intellij.codeInspection.AbstractBaseJavaLocalInspectionTool;
 import com.intellij.codeInspection.ProblemsHolder;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiAnnotation;
+import com.intellij.psi.PsiModifier;
+import com.intellij.psi.PsiModifierList;
 import org.jetbrains.annotations.NotNull;
 import org.liman.annotation.ForceFinal;
+import org.liman.plugin.modifier.Marker;
 
-import java.util.Optional;
+public class MarkFinal extends Marker<ForceFinal> {
 
-public class MarkFinal extends AbstractBaseJavaLocalInspectionTool {
-    @NotNull
+    public MarkFinal() {
+        super(ForceFinal.class);
+    }
+
     @Override
-    public PsiElementVisitor buildVisitor(@NotNull final ProblemsHolder holder, boolean isOnTheFly) {
-        return new JavaElementVisitor() {
-            @Override
-            public void visitAnnotation(@NotNull PsiAnnotation annotation) {
-                super.visitAnnotation(annotation);
-                boolean value = Optional.of(annotation)
-                        .map(PsiAnnotation::resolveAnnotationType)
-                        .map(a -> a.getAnnotation(ForceFinal.class.getName()))
-                        .isPresent();
-                PsiModifierList psiModifierList = Optional.of(annotation)
-                        .map(PsiAnnotation::getParent)
-                        .filter(PsiModifierList.class::isInstance)
-                        .map(PsiModifierList.class::cast)
-                        .orElse(null);
-                if (psiModifierList == null) {
-                    return;
-                }
-                if (psiModifierList.hasModifierProperty(PsiModifier.FINAL) == value) {
-                    return;
-                }
-                holder.registerProblem(
-                        annotation,
-                        "Annotation target should" + (value ? "" : " not") + " be final",
-                        new MarkFinalQuickFix(psiModifierList));
-            }
-        };
+    public boolean checkModifier(PsiModifierList psiModifierList) {
+        return psiModifierList.hasModifierProperty(PsiModifier.FINAL);
+    }
+
+    @Override
+    public void registerProblem(@NotNull ProblemsHolder holder, @NotNull PsiAnnotation annotation, PsiModifierList psiModifierList) {
+        holder.registerProblem(
+                annotation,
+                "Annotation target should be final",
+                new MarkFinalQuickFix(psiModifierList));
     }
 }
 
