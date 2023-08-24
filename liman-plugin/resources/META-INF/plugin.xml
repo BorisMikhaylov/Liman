@@ -31,15 +31,33 @@
                          enabledByDefault="true"
                          level="ERROR"
                          implementationClass="org.liman.plugin.modifier.staticc.MarkStatic"/>
-        <localInspection language="JAVA"
-                         bundle="messages.InspectionsBundle"
-                         key="group.names.probable.bugs"
-                         groupPath="Java"
-                         groupBundle="messages.InspectionsBundle"
-                         groupKey="group.names.probable.bugs"
-                         enabledByDefault="true"
-                         level="ERROR"
-                         implementationClass="org.liman.plugin.modifier.finall.MarkFinal"/>
+        <!--        <localInspection language="JAVA"-->
+        <!--                         bundle="messages.InspectionsBundle"-->
+        <!--                         key="group.names.probable.bugs"-->
+        <!--                         groupPath="Java"-->
+        <!--                         groupBundle="messages.InspectionsBundle"-->
+        <!--                         groupKey="group.names.probable.bugs"-->
+        <!--                         enabledByDefault="true"-->
+        <!--                         level="ERROR"-->
+        <!--                         implementationClass="org.liman.plugin.modifier.finall.MarkFinal"/>-->
+        <!--        <localInspection language="JAVA"-->
+        <!--                         bundle="messages.InspectionsBundle"-->
+        <!--                         key="group.names.probable.bugs"-->
+        <!--                         groupPath="Java"-->
+        <!--                         groupBundle="messages.InspectionsBundle"-->
+        <!--                         groupKey="group.names.probable.bugs"-->
+        <!--                         enabledByDefault="true"-->
+        <!--                         level="ERROR"-->
+        <!--                         implementationClass="org.liman.plugin.modifier.finall.MarkMutable"/>-->
+        <!--        <localInspection language="JAVA"-->
+        <!--                         bundle="messages.InspectionsBundle"-->
+        <!--                         key="group.names.probable.bugs"-->
+        <!--                         groupPath="Java"-->
+        <!--                         groupBundle="messages.InspectionsBundle"-->
+        <!--                         groupKey="group.names.probable.bugs"-->
+        <!--                         enabledByDefault="true"-->
+        <!--                         level="ERROR"-->
+        <!--                         implementationClass="org.liman.plugin.modifier.staticc.MarkNonStatic"/>-->
     </extensions>
 
 

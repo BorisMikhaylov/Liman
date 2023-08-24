@@ -1,40 +1,37 @@
 package org.liman.plugin.modifier.staticc;
 
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemDescriptor;
+import com.intellij.codeInspection.LocalQuickFixOnPsiElement;
 import com.intellij.codeInspection.util.IntentionFamilyName;
 import com.intellij.codeInspection.util.IntentionName;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiModifier;
+import com.intellij.psi.PsiModifierList;
 import org.jetbrains.annotations.NotNull;
 
-public class MarkStaticQuickFix implements LocalQuickFix {
-
-    @SafeFieldForPreview
-    private final SmartPsiElementPointer<PsiModifierList> modifierList;
+public class MarkStaticQuickFix extends LocalQuickFixOnPsiElement {
 
     public MarkStaticQuickFix(@NotNull PsiModifierList modifierList) {
-        PsiFile containingFile = modifierList.getContainingFile();
-        Project project = containingFile == null ? modifierList.getProject() : containingFile.getProject();
-        this.modifierList = SmartPointerManager.getInstance(project).createSmartPsiElementPointer(modifierList, containingFile);
+        super(modifierList);
     }
 
     @Override
     public @IntentionName
-    @NotNull String getName() {
-        return "Make it static";
+    @NotNull String getText() {
+        return "Make it static text";
     }
 
     @Override
     public @IntentionFamilyName
     @NotNull String getFamilyName() {
-        return "Make it static";
+        return "Make it static family";
     }
 
+
     @Override
-    public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor problemDescriptor) {
-        PsiModifierList modifierListElement = modifierList.getElement();
-        if (modifierListElement == null) return;
+    public void invoke(@NotNull Project project, @NotNull PsiFile psiFile, @NotNull PsiElement psiElement, @NotNull PsiElement psiElement1) {
+        PsiModifierList modifierListElement = (PsiModifierList) psiElement;
         modifierListElement.setModifierProperty(PsiModifier.STATIC, true);
     }
 }

@@ -20,6 +20,9 @@ public class MarkStatic extends AbstractBaseJavaLocalInspectionTool {
                         .map(PsiAnnotation::resolveAnnotationType)
                         .map(a -> a.getAnnotation(ForceStatic.class.getName()))
                         .isPresent();
+                if (!value) {
+                    return;
+                }
                 PsiModifierList psiModifierList = Optional.of(annotation)
                         .map(PsiAnnotation::getParent)
                         .filter(PsiModifierList.class::isInstance)
@@ -28,12 +31,12 @@ public class MarkStatic extends AbstractBaseJavaLocalInspectionTool {
                 if (psiModifierList == null) {
                     return;
                 }
-                if (psiModifierList.hasModifierProperty(PsiModifier.STATIC) == value) {
+                if (psiModifierList.hasModifierProperty(PsiModifier.STATIC)) {
                     return;
                 }
                 holder.registerProblem(
                         annotation,
-                        "Annotation target should" + (value ? "" : " not") + " be static",
+                        "Annotation target should be static",
                         new MarkStaticQuickFix(psiModifierList));
             }
         };
