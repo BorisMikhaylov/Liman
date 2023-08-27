@@ -7,7 +7,6 @@ import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiModifierList;
 import org.jetbrains.annotations.NotNull;
-import org.liman.plugin.modifier.staticc.MarkStaticQuickFix;
 
 import java.lang.annotation.Annotation;
 import java.util.Optional;
@@ -44,10 +43,6 @@ public abstract class Marker<A extends Annotation> extends AbstractBaseJavaLocal
                     return;
                 }
                 registerProblem(holder, annotation, psiModifierList);
-                holder.registerProblem(
-                        annotation,
-                        "Annotation target should be static",
-                        new MarkStaticQuickFix(psiModifierList));
             }
         };
     }
