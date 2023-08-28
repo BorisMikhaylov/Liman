@@ -16,7 +16,7 @@ public class MarkNonStatic extends Marker<ForceNonStatic> {
 
     @Override
     public boolean checkModifier(PsiModifierList psiModifierList) {
-        return psiModifierList.hasModifierProperty(PsiModifier.FINAL);
+        return !psiModifierList.hasModifierProperty(PsiModifier.STATIC);
     }
 
     @Override
