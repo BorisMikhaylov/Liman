@@ -34,11 +34,15 @@ public class MarkMutableQuickFix implements LocalQuickFix {
     @Override
     public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor problemDescriptor) {
         PsiModifierList modifierListElement = modifierList.getElement();
-        if (modifierListElement == null) return;
-        if (modifierListElement.hasModifierProperty(PsiModifier.FINAL)) {
-            PsiAnnotation psiAnnotation = modifierListElement.findAnnotation(PsiModifier.FINAL);
-            if (psiAnnotation != null) {
-                psiAnnotation.delete();
+        if (modifierListElement != null) {
+            for (PsiElement modifier : modifierListElement.getChildren()) {
+                if (modifier instanceof PsiKeyword) {
+                    String modifierText = modifier.getText();
+                    if ("final".equals(modifierText)) {
+                        modifier.delete();
+                        break;
+                    }
+                }
             }
         }
     }

@@ -34,7 +34,16 @@ public class MarkNonStaticQuickFix implements LocalQuickFix {
     @Override
     public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor problemDescriptor) {
         PsiModifierList modifierListElement = modifierList.getElement();
-        if (modifierListElement == null) return;
-        modifierListElement.setModifierProperty(PsiModifier.STATIC, true);
+        if (modifierListElement != null) {
+            for (PsiElement modifier : modifierListElement.getChildren()) {
+                if (modifier instanceof PsiKeyword) {
+                    String modifierText = modifier.getText();
+                    if ("static".equals(modifierText)) {
+                        modifier.delete();
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
