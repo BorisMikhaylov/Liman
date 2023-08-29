@@ -6,9 +6,9 @@ import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiModifierList;
 import org.jetbrains.annotations.NotNull;
 import org.liman.annotation.ForceNonStatic;
-import org.liman.plugin.modifier.Marker;
+import org.liman.plugin.modifier.ModifierListInspectionTool;
 
-public class MarkNonStatic extends Marker<ForceNonStatic> {
+public class MarkNonStatic extends ModifierListInspectionTool<ForceNonStatic> {
 
     public MarkNonStatic() {
         super(ForceNonStatic.class);

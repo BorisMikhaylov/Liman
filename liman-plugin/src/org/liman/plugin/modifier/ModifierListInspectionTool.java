@@ -11,10 +11,10 @@ import org.jetbrains.annotations.NotNull;
 import java.lang.annotation.Annotation;
 import java.util.Optional;
 
-public abstract class Marker<A extends Annotation> extends AbstractBaseJavaLocalInspectionTool {
+public abstract class ModifierListInspectionTool<A extends Annotation> extends AbstractBaseJavaLocalInspectionTool {
     private final Class<A> clazz;
 
-    public Marker(Class<A> clazz) {
+    public ModifierListInspectionTool(Class<A> clazz) {
         this.clazz = clazz;
     }
 

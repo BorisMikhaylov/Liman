@@ -6,9 +6,9 @@ import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiModifierList;
 import org.jetbrains.annotations.NotNull;
 import org.liman.annotation.ForceFinal;
-import org.liman.plugin.modifier.Marker;
+import org.liman.plugin.modifier.ModifierListInspectionTool;
 
-public class MarkFinal extends Marker<ForceFinal> {
+public class MarkFinal extends ModifierListInspectionTool<ForceFinal> {
 
     public MarkFinal() {
         super(ForceFinal.class);

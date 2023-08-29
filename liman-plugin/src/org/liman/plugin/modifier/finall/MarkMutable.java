@@ -6,9 +6,9 @@ import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiModifierList;
 import org.jetbrains.annotations.NotNull;
 import org.liman.annotation.ForceMutable;
-import org.liman.plugin.modifier.Marker;
+import org.liman.plugin.modifier.ModifierListInspectionTool;
 
-public class MarkMutable extends Marker<ForceMutable> {
+public class MarkMutable extends ModifierListInspectionTool<ForceMutable> {
 
     public MarkMutable() {
         super(ForceMutable.class);
