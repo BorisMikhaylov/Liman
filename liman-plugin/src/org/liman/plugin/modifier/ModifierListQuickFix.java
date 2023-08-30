@@ -9,32 +9,35 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiModifierList;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class QuickFix extends LocalQuickFixOnPsiElement {
+import java.util.function.Consumer;
 
-    private final String modifier;
-    private final boolean isStraight;
+public class ModifierListQuickFix extends LocalQuickFixOnPsiElement {
 
-    public QuickFix(@NotNull PsiModifierList modifierList, String modifier, boolean isStraight) {
+    @SafeFieldForPreview
+    private final Consumer<PsiModifierList> consumer;
+    private final @IntentionName String text;
+
+    public ModifierListQuickFix(@NotNull PsiModifierList modifierList, Consumer<PsiModifierList> consumer, @IntentionName String text) {
         super(modifierList);
-        this.modifier = modifier;
-        this.isStraight = isStraight;
+        this.consumer = consumer;
+        this.text = text;
     }
 
     @Override
-    public @IntentionName
-    @NotNull String getText() {
-        return "Make it " + modifier + " text";
+    @IntentionName
+    public @NotNull String getText() {
+        return text;
     }
 
     @Override
     public @IntentionFamilyName
     @NotNull String getFamilyName() {
-        return "Make it " + modifier + " family";
+        return "Liman fixes";
     }
 
     @Override
     public void invoke(@NotNull Project project, @NotNull PsiFile psiFile, @NotNull PsiElement psiElement, @NotNull PsiElement psiElement1) {
         PsiModifierList modifierListElement = (PsiModifierList) psiElement;
-        modifierListElement.setModifierProperty(modifier, isStraight);
+        consumer.accept(modifierListElement);
     }
 }

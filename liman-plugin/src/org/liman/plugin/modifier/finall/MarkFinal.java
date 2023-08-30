@@ -7,6 +7,7 @@ import com.intellij.psi.PsiModifierList;
 import org.jetbrains.annotations.NotNull;
 import org.liman.annotation.ForceFinal;
 import org.liman.plugin.modifier.ModifierListInspectionTool;
+import org.liman.plugin.modifier.ModifierListQuickFix;
 
 public class MarkFinal extends ModifierListInspectionTool<ForceFinal> {
 
@@ -24,7 +25,7 @@ public class MarkFinal extends ModifierListInspectionTool<ForceFinal> {
         holder.registerProblem(
                 annotation,
                 "Annotation target should be final",
-                new MarkFinalQuickFix(psiModifierList));
+                new ModifierListQuickFix(psiModifierList, l -> l.setModifierProperty(PsiModifier.FINAL, true), "Make final"));
     }
 }
 

@@ -7,6 +7,7 @@ import com.intellij.psi.PsiModifierList;
 import org.jetbrains.annotations.NotNull;
 import org.liman.annotation.ForceMutable;
 import org.liman.plugin.modifier.ModifierListInspectionTool;
+import org.liman.plugin.modifier.ModifierListQuickFix;
 
 public class MarkMutable extends ModifierListInspectionTool<ForceMutable> {
 
@@ -24,7 +25,7 @@ public class MarkMutable extends ModifierListInspectionTool<ForceMutable> {
         holder.registerProblem(
                 annotation,
                 "Annotation target should not be final",
-                new MarkMutableQuickFix(psiModifierList));
+                new ModifierListQuickFix(psiModifierList, l -> l.setModifierProperty(PsiModifier.FINAL, false), "Make not final"));
     }
 }
 
