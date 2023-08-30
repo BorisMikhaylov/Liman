@@ -32,7 +32,7 @@ public class ModifierListQuickFix extends LocalQuickFixOnPsiElement {
     @Override
     public @IntentionFamilyName
     @NotNull String getFamilyName() {
-        return "Liman fixes";
+        return InspectionBundle.message("inspection.liman.family.default");
     }
 
     @Override

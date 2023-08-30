@@ -6,6 +6,7 @@ import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiModifierList;
 import org.jetbrains.annotations.NotNull;
 import org.liman.annotation.ForceNonStatic;
+import org.liman.plugin.modifier.InspectionBundle;
 import org.liman.plugin.modifier.ModifierListInspectionTool;
 import org.liman.plugin.modifier.ModifierListQuickFix;
 
@@ -24,8 +25,10 @@ public class MarkNonStatic extends ModifierListInspectionTool<ForceNonStatic> {
     public void registerProblem(@NotNull ProblemsHolder holder, @NotNull PsiAnnotation annotation, PsiModifierList psiModifierList) {
         holder.registerProblem(
                 annotation,
-                "Annotation target should not be static",
-                new ModifierListQuickFix(psiModifierList, l -> l.setModifierProperty(PsiModifier.STATIC, false), "Make not static"));
+                InspectionBundle.message("inspection.modifier.static.no.description"),
+                new ModifierListQuickFix(psiModifierList,
+                        l -> l.setModifierProperty(PsiModifier.STATIC, true),
+                        InspectionBundle.message("inspection.modifier.static.no.name")));
     }
 }
 

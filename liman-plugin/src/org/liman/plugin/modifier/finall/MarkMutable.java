@@ -6,6 +6,7 @@ import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiModifierList;
 import org.jetbrains.annotations.NotNull;
 import org.liman.annotation.ForceMutable;
+import org.liman.plugin.modifier.InspectionBundle;
 import org.liman.plugin.modifier.ModifierListInspectionTool;
 import org.liman.plugin.modifier.ModifierListQuickFix;
 
@@ -24,8 +25,10 @@ public class MarkMutable extends ModifierListInspectionTool<ForceMutable> {
     public void registerProblem(@NotNull ProblemsHolder holder, @NotNull PsiAnnotation annotation, PsiModifierList psiModifierList) {
         holder.registerProblem(
                 annotation,
-                "Annotation target should not be final",
-                new ModifierListQuickFix(psiModifierList, l -> l.setModifierProperty(PsiModifier.FINAL, false), "Make not final"));
+                InspectionBundle.message("inspection.modifier.final.no.description"),
+                new ModifierListQuickFix(psiModifierList,
+                        l -> l.setModifierProperty(PsiModifier.STATIC, true),
+                        InspectionBundle.message("inspection.modifier.final.no.name")));
     }
 }
 
