@@ -6,7 +6,7 @@ import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiModifierList;
 import org.jetbrains.annotations.NotNull;
 import org.liman.annotation.ForceFinal;
-import org.liman.plugin.modifier.InspectionBundle;
+import org.liman.plugin.modifier.LimanInspectionBundle;
 import org.liman.plugin.modifier.ModifierListInspectionTool;
 import org.liman.plugin.modifier.ModifierListQuickFix;
 
@@ -25,10 +25,10 @@ public class MarkFinal extends ModifierListInspectionTool<ForceFinal> {
     public void registerProblem(@NotNull ProblemsHolder holder, @NotNull PsiAnnotation annotation, PsiModifierList psiModifierList) {
         holder.registerProblem(
                 annotation,
-                InspectionBundle.message("inspection.modifier.final.yes.description"),
+                LimanInspectionBundle.message("inspection.modifier.final.yes.description"),
                 new ModifierListQuickFix(psiModifierList,
                         l -> l.setModifierProperty(PsiModifier.STATIC, true),
-                        InspectionBundle.message("inspection.modifier.final.yes.name")));
+                        LimanInspectionBundle.message("quick.fix.make.final")));
     }
 }
 

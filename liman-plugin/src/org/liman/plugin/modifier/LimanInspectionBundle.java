@@ -8,14 +8,14 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.PropertyKey;
 
-public final class InspectionBundle extends DynamicBundle {
+public final class LimanInspectionBundle extends DynamicBundle {
 
-    private static final InspectionBundle ourInstance = new InspectionBundle();
+    private static final LimanInspectionBundle ourInstance = new LimanInspectionBundle();
 
     @NonNls
-    public static final String BUNDLE = "messages.InspectionBundle";
+    public static final String BUNDLE = "messages.LimanInspectionBundle";
 
-    private InspectionBundle() {
+    private LimanInspectionBundle() {
         super(BUNDLE);
     }
 

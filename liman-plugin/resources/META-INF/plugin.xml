@@ -1,11 +1,12 @@
 <idea-plugin>
-    <id>com.your.company.unique.plugin.id</id>
+    <id>com.liman.annotations</id>
     <name>Liman</name>
     <version>1.0</version>
     <vendor email="boris.n.mikhaylov@gmail.com" url="https://github.com/BorisMikhaylov/Liman">Liman</vendor>
 
     <description>
-        Limit annotation usages support library org.liman
+        Limit annotation usages
+        See https://github.com/BorisMikhaylov/Liman
     </description>
 
     <change-notes>
@@ -23,38 +24,38 @@
     <extensions defaultExtensionNs="com.intellij">
 
         <localInspection language="JAVA"
-                         bundle="messages.InspectionsBundle"
-                         key="group.names.probable.bugs"
+                         bundle="messages.LimanInspectionBundle"
+                         key="inspection.name.mark.static"
                          groupPath="Java"
-                         groupBundle="messages.InspectionsBundle"
-                         groupKey="group.names.probable.bugs"
+                         groupBundle="messages.LimanInspectionBundle"
+                         groupKey="group.names.liman"
                          enabledByDefault="true"
                          level="ERROR"
                          implementationClass="org.liman.plugin.modifier.staticc.MarkStatic"/>
         <localInspection language="JAVA"
-                         bundle="messages.InspectionsBundle"
-                         key="group.names.probable.bugs"
+                         bundle="messages.LimanInspectionBundle"
+                         key="inspection.name.mark.final"
                          groupPath="Java"
-                         groupBundle="messages.InspectionsBundle"
-                         groupKey="group.names.probable.bugs"
+                         groupBundle="messages.LimanInspectionBundle"
+                         groupKey="group.names.liman"
                          enabledByDefault="true"
                          level="ERROR"
                          implementationClass="org.liman.plugin.modifier.finall.MarkFinal"/>
         <localInspection language="JAVA"
-                         bundle="messages.InspectionsBundle"
-                         key="group.names.probable.bugs"
+                         bundle="messages.LimanInspectionBundle"
+                         key="inspection.name.mark.mutable"
                          groupPath="Java"
-                         groupBundle="messages.InspectionsBundle"
-                         groupKey="group.names.probable.bugs"
+                         groupBundle="messages.LimanInspectionBundle"
+                         groupKey="group.names.liman"
                          enabledByDefault="true"
                          level="ERROR"
                          implementationClass="org.liman.plugin.modifier.finall.MarkMutable"/>
         <localInspection language="JAVA"
-                         bundle="messages.InspectionsBundle"
-                         key="group.names.probable.bugs"
+                         bundle="messages.LimanInspectionBundle"
+                         key="inspection.name.mark.nonstatic"
                          groupPath="Java"
-                         groupBundle="messages.InspectionsBundle"
-                         groupKey="group.names.probable.bugs"
+                         groupBundle="messages.LimanInspectionBundle"
+                         groupKey="group.names.liman"
                          enabledByDefault="true"
                          level="ERROR"
                          implementationClass="org.liman.plugin.modifier.staticc.MarkNonStatic"/>
