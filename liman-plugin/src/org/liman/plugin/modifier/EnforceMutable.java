@@ -1,34 +1,32 @@
-package org.liman.plugin.modifier.finall;
+package org.liman.plugin.modifier;
 
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiModifierList;
 import org.jetbrains.annotations.NotNull;
-import org.liman.annotation.ForceFinal;
-import org.liman.plugin.modifier.LimanInspectionBundle;
-import org.liman.plugin.modifier.ModifierListInspectionTool;
-import org.liman.plugin.modifier.ModifierListQuickFix;
+import org.liman.annotation.ForceMutable;
+import org.liman.plugin.LimanInspectionBundle;
 
-public class MarkFinal extends ModifierListInspectionTool<ForceFinal> {
+public class EnforceMutable extends ModifierListInspectionTool<ForceMutable> {
 
-    public MarkFinal() {
-        super(ForceFinal.class);
+    public EnforceMutable() {
+        super(ForceMutable.class);
     }
 
     @Override
     public boolean checkModifier(PsiModifierList psiModifierList) {
-        return psiModifierList.hasModifierProperty(PsiModifier.FINAL);
+        return !psiModifierList.hasModifierProperty(PsiModifier.FINAL);
     }
 
     @Override
     public void registerProblem(@NotNull ProblemsHolder holder, @NotNull PsiAnnotation annotation, PsiModifierList psiModifierList) {
         holder.registerProblem(
                 annotation,
-                LimanInspectionBundle.message("inspection.modifier.final.yes.description"),
+                LimanInspectionBundle.message("inspection.description.make.mutable"),
                 new ModifierListQuickFix(psiModifierList,
                         l -> l.setModifierProperty(PsiModifier.STATIC, true),
-                        LimanInspectionBundle.message("quick.fix.make.final")));
+                        LimanInspectionBundle.message("quickfix.make.mutable")));
     }
 }
 

@@ -1,34 +1,32 @@
-package org.liman.plugin.modifier.staticc;
+package org.liman.plugin.modifier;
 
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiModifierList;
 import org.jetbrains.annotations.NotNull;
-import org.liman.annotation.ForceNonStatic;
-import org.liman.plugin.modifier.LimanInspectionBundle;
-import org.liman.plugin.modifier.ModifierListInspectionTool;
-import org.liman.plugin.modifier.ModifierListQuickFix;
+import org.liman.annotation.ForceStatic;
+import org.liman.plugin.LimanInspectionBundle;
 
-public class MarkNonStatic extends ModifierListInspectionTool<ForceNonStatic> {
+public class EnforceStatic extends ModifierListInspectionTool<ForceStatic> {
 
-    public MarkNonStatic() {
-        super(ForceNonStatic.class);
+    public EnforceStatic() {
+        super(ForceStatic.class);
     }
 
     @Override
     public boolean checkModifier(PsiModifierList psiModifierList) {
-        return !psiModifierList.hasModifierProperty(PsiModifier.STATIC);
+        return psiModifierList.hasModifierProperty(PsiModifier.STATIC);
     }
 
     @Override
     public void registerProblem(@NotNull ProblemsHolder holder, @NotNull PsiAnnotation annotation, PsiModifierList psiModifierList) {
         holder.registerProblem(
                 annotation,
-                LimanInspectionBundle.message("inspection.modifier.static.no.description"),
+                LimanInspectionBundle.message("inspection.description.make.static"),
                 new ModifierListQuickFix(psiModifierList,
                         l -> l.setModifierProperty(PsiModifier.STATIC, true),
-                        LimanInspectionBundle.message("quick.fix.make.nonstatic")));
+                        LimanInspectionBundle.message("quickfix.make.static")));
     }
 }
 

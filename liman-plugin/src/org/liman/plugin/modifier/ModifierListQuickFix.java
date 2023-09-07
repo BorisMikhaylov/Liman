@@ -8,6 +8,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiModifierList;
 import org.jetbrains.annotations.NotNull;
+import org.liman.plugin.LimanInspectionBundle;
 
 import java.util.function.Consumer;
 
@@ -32,7 +33,7 @@ public class ModifierListQuickFix extends LocalQuickFixOnPsiElement {
     @Override
     public @IntentionFamilyName
     @NotNull String getFamilyName() {
-        return LimanInspectionBundle.message("inspection.liman.family.default");
+        return LimanInspectionBundle.message("quickfix.family");
     }
 
     @Override

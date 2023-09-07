@@ -25,40 +25,40 @@
 
         <localInspection language="JAVA"
                          bundle="messages.LimanInspectionBundle"
-                         key="inspection.name.mark.static"
+                         key="inspection.name.make.static"
                          groupPath="Java"
                          groupBundle="messages.LimanInspectionBundle"
-                         groupKey="group.names.liman"
+                         groupKey="inspection.group.name"
                          enabledByDefault="true"
                          level="ERROR"
-                         implementationClass="org.liman.plugin.modifier.staticc.MarkStatic"/>
+                         implementationClass="org.liman.plugin.modifier.EnforceStatic"/>
         <localInspection language="JAVA"
                          bundle="messages.LimanInspectionBundle"
-                         key="inspection.name.mark.final"
+                         key="inspection.name.make.final"
                          groupPath="Java"
                          groupBundle="messages.LimanInspectionBundle"
-                         groupKey="group.names.liman"
+                         groupKey="inspection.group.name"
                          enabledByDefault="true"
                          level="ERROR"
-                         implementationClass="org.liman.plugin.modifier.finall.MarkFinal"/>
+                         implementationClass="org.liman.plugin.modifier.EnforceFinal"/>
         <localInspection language="JAVA"
                          bundle="messages.LimanInspectionBundle"
-                         key="inspection.name.mark.mutable"
+                         key="inspection.name.make.mutable"
                          groupPath="Java"
                          groupBundle="messages.LimanInspectionBundle"
-                         groupKey="group.names.liman"
+                         groupKey="inspection.group.name"
                          enabledByDefault="true"
                          level="ERROR"
-                         implementationClass="org.liman.plugin.modifier.finall.MarkMutable"/>
+                         implementationClass="org.liman.plugin.modifier.EnforceMutable"/>
         <localInspection language="JAVA"
                          bundle="messages.LimanInspectionBundle"
-                         key="inspection.name.mark.nonstatic"
+                         key="inspection.name.make.nonstatic"
                          groupPath="Java"
                          groupBundle="messages.LimanInspectionBundle"
-                         groupKey="group.names.liman"
+                         groupKey="inspection.group.name"
                          enabledByDefault="true"
                          level="ERROR"
-                         implementationClass="org.liman.plugin.modifier.staticc.MarkNonStatic"/>
+                         implementationClass="org.liman.plugin.modifier.EnforceNonStatic"/>
     </extensions>
 
 
