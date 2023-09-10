@@ -1,10 +1,8 @@
 package org.liman.plugin.modifier;
 
-import com.intellij.codeInspection.ProblemsHolder;
-import com.intellij.psi.PsiAnnotation;
+import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiModifierList;
-import org.jetbrains.annotations.NotNull;
 import org.liman.annotation.ForceMutable;
 import org.liman.plugin.LimanInspectionBundle;
 
@@ -19,14 +17,17 @@ public class EnforceMutable extends ModifierListInspectionTool<ForceMutable> {
         return !psiModifierList.hasModifierProperty(PsiModifier.FINAL);
     }
 
+
     @Override
-    public void registerProblem(@NotNull ProblemsHolder holder, @NotNull PsiAnnotation annotation, PsiModifierList psiModifierList) {
-        holder.registerProblem(
-                annotation,
-                LimanInspectionBundle.message("inspection.description.make.mutable"),
-                new ModifierListQuickFix(psiModifierList,
-                        l -> l.setModifierProperty(PsiModifier.STATIC, true),
-                        LimanInspectionBundle.message("quickfix.make.mutable")));
+    public String getMessage() {
+        return LimanInspectionBundle.message("inspection.description.make.mutable");
+    }
+
+    @Override
+    public LocalQuickFix getQuickFix(PsiModifierList modifierList) {
+        return new ModifierListQuickFix(modifierList,
+                l -> l.setModifierProperty(PsiModifier.STATIC, true),
+                LimanInspectionBundle.message("quickfix.make.mutable"));
     }
 }
 
