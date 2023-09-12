@@ -60,11 +60,11 @@ public abstract class ModifierListInspectionTool<A extends Annotation> extends A
 
     public abstract LocalQuickFix getQuickFix(PsiModifierList modifierList);
 
-    public void registerProblem(@NotNull ProblemsHolder holder, @NotNull PsiAnnotation annotation, PsiModifierList psiModifierList, MessageLevel messageLevel) {
+    public void registerProblem(@NotNull ProblemsHolder holder, @NotNull PsiAnnotation annotation, PsiModifierList psiModifierList) {
         holder.registerProblem(
                 annotation,
                 getMessage(),
-                getProblemHighlightTypeFromMessageLevel(messageLevel),
+                getProblemHighlightTypeFromMessageLevel(getOverloadingMaxLevel(annotation.getParent().getParent()).orElse(ERROR)),
                 getQuickFix(psiModifierList));
     }
 
@@ -83,7 +83,15 @@ public abstract class ModifierListInspectionTool<A extends Annotation> extends A
                 .map(a -> a.findAttributeValue("value"))
                 .filter(Objects::nonNull)
                 .findFirst();
-        return value.map(ModifierListInspectionTool::getMessageLevelFromPsiAnnotationValue).or(() -> getOverloadingMaxLevel(element.getParent()));
+        return value.map(ModifierListInspectionTool::getMessageLevelFromPsiAnnotationValue).or(() -> {
+            PsiElement parent = element.getParent();
+            if (parent instanceof PsiJavaFile) {
+                PsiJavaFile psiJavaFile = (PsiJavaFile) parent;
+                parent = JavaPsiFacade.getInstance(element.getProject())
+                        .findPackage(psiJavaFile.getPackageName());
+            }
+            return getOverloadingMaxLevel(parent);
+        });
     }
 
     public static MessageLevel getMessageLevelFromPsiAnnotationValue(PsiAnnotationMemberValue value) {

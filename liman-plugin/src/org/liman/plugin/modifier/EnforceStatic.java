@@ -29,5 +29,3 @@ public class EnforceStatic extends ModifierListInspectionTool<ForceStatic> {
                 LimanInspectionBundle.message("quickfix.make.static"));
     }
 }
-
-

@@ -29,5 +29,3 @@ public class EnforceNonStatic extends ModifierListInspectionTool<ForceNonStatic>
                 LimanInspectionBundle.message("quickfix.make.nonstatic"));
     }
 }
-
-

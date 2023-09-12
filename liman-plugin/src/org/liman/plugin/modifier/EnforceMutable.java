@@ -30,5 +30,3 @@ public class EnforceMutable extends ModifierListInspectionTool<ForceMutable> {
                 LimanInspectionBundle.message("quickfix.make.mutable"));
     }
 }
-
-

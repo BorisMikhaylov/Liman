@@ -29,5 +29,3 @@ public class EnforceFinal extends ModifierListInspectionTool<ForceFinal> {
                 LimanInspectionBundle.message("quickfix.make.final"));
     }
 }
-
-
